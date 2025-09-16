@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA + Projects Roadmap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+    .phase-card {
+      margin-bottom: 20px;
+    }
+    .progress-container {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+    }
+
+    /* 🔹 Watermark in background */
+    body::before {
+      content: "Harsh – linkedin.com/in/yourprofile";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 3rem;
+      color: rgba(0, 0, 0, 0.05);
+      white-space: nowrap;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 🔹 Small footer reference */
+    .watermark-footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1><i class="bi bi-bar-chart-fill"></i> DSA + Projects Roadmap</h1>
+
+  <div class="progress-container">
+    <div class="progress">
+      <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%">0%</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Phase 1 -->
+    <div class="card phase-card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title"><i class="bi bi-lightbulb"></i> Phase 1: Foundation (Sept – Dec 2025)</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><input type="checkbox"> Learn Arrays, Strings, Recursion basics</li>
+          <li class="list-group-item"><input type="checkbox"> Solve 100 problems (Easy/Medium)</li>
+          <li class="list-group-item"><input type="checkbox"> Learn Python basics (OOP, DS)</li>
+          <li class="list-group-item"><input type="checkbox"> Learn HTML, CSS, JS basics</li>
+          <li class="list-group-item"><input type="checkbox"> Build portfolio site</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="card phase-card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title"><i class="bi bi-rocket"></i> Phase 2: Growth (Jan – Apr 2026)</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><input type="checkbox"> Learn Stack, Queue, Linked List</li>
+          <li class="list-group-item"><input type="checkbox"> Solve 150 problems (Easy/Medium/Hard)</li>
+          <li class="list-group-item"><input type="checkbox"> Learn Flask/Django or Node.js</li>
+          <li class="list-group-item"><input type="checkbox"> Build To-Do App / Expense Tracker</li>
+          <li class="list-group-item"><input type="checkbox"> Learn SQL basics</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="card phase-card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title"><i class="bi bi-mortarboard"></i> Phase 3: Pre-Placement Ready (May – Aug 2026)</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><input type="checkbox"> Learn DP, Graphs, Greedy</li>
+          <li class="list-group-item"><input type="checkbox"> Solve 350–400 problems total</li>
+          <li class="list-group-item"><input type="checkbox"> Start mock interviews</li>
+          <li class="list-group-item"><input type="checkbox"> Build portfolio-worthy project (deployed)</li>
+          <li class="list-group-item"><input type="checkbox"> Update resume with projects</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="card phase-card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title"><i class="bi bi-trophy"></i> Phase 4: Advance & Placement Prep (Sept – Dec 2026)</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><input type="checkbox"> Learn advanced DP, Graphs, DSU</li>
+          <li class="list-group-item"><input type="checkbox"> Solve 500+ problems total</li>
+          <li class="list-group-item"><input type="checkbox"> Practice company-wise problems</li>
+          <li class="list-group-item"><input type="checkbox"> Try freelancing gigs</li>
+          <li class="list-group-item"><input type="checkbox"> Build startup MVP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-outline-danger" onclick="resetChecklist()"><i class="bi bi-arrow-counterclockwise"></i> Reset All</button>
+      <button class="btn btn-outline-primary" onclick="window.print()"><i class="bi bi-printer"></i> Print Roadmap</button>
+    </div>
+
+    <div class="watermark-footer">
+      © 2025 Harsh Tripathi | <a href="https://www.linkedin.com/in/harsh-tripathi-730689306/" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const progressBar = document.getElementById("progressBar");
+
+    function updateProgress() {
+      const total = checkboxes.length;
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const percent = Math.round((checked / total) * 100);
+      progressBar.style.width = percent + "%";
+      progressBar.textContent = percent + "%";
+    }
+
+    function saveChecklist() {
+      const checkedStates = Array.from(checkboxes).map(cb => cb.checked);
+      localStorage.setItem("roadmapChecklist", JSON.stringify(checkedStates));
+    }
+
+    function loadChecklist() {
+      const saved = JSON.parse(localStorage.getItem("roadmapChecklist"));
+      if (saved) {
+        checkboxes.forEach((cb, i) => cb.checked = saved[i]);
+      }
+      updateProgress();
+    }
+
+    function resetChecklist() {
+      checkboxes.forEach(cb => cb.checked = false);
+      saveChecklist();
+      updateProgress();
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", () => {
+        saveChecklist();
+        updateProgress();
+      });
+    });
+
+    loadChecklist();
+  </script>
+</body>
+</html>
