@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Union / Intersection playground</title>
+</head>
+<body>
+  <h3>Union & Intersection Playground</h3>
+  <p>Enter arrays (comma separated):</p>
+  A: <input id="a" value="1,2,2,3"><br>
+  B: <input id="b" value="2,2,4"><br>
+  <button onclick="run()">Run</button>
+  <pre id="out"></pre>
+
+  <script>
+    function parse(s){
+      if(!s.trim()) return [];
+      return s.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+    }
+    function unionSorted(a,b){
+      a = a.slice().sort((x,y)=>x-y);
+      b = b.slice().sort((x,y)=>x-y);
+      let i=0,j=0,res=[];
+      while(i<a.length && j<b.length){
+        if(a[i]<b[j]) { if(res.length===0||res[res.length-1]!==a[i]) res.push(a[i]); i++; }
+        else if(a[i]>b[j]) { if(res.length===0||res[res.length-1]!==b[j]) res.push(b[j]); j++; }
+        else { if(res.length===0||res[res.length-1]!==a[i]) res.push(a[i]); i++; j++; }
+      }
+      while(i<a.length){ if(res.length===0||res[res.length-1]!==a[i]) res.push(a[i]); i++; }
+      while(j<b.length){ if(res.length===0||res[res.length-1]!==b[j]) res.push(b[j]); j++; }
+      return res;
+    }
+    function intersectionFreq(a,b){
+      const cnt = {};
+      for(let x of a) cnt[x]=(cnt[x]||0)+1;
+      const out = [];
+      for(let x of b) if(cnt[x]>0){ out.push(x); cnt[x]--; }
+      return out;
+    }
+    function run(){
+      const a = parse(document.getElementById('a').value);
+      const b = parse(document.getElementById('b').value);
+      const out = document.getElementById('out');
+      out.textContent = '';
+      out.textContent += 'A sorted: ' + JSON.stringify(a.slice().sort((x,y)=>x-y)) + '\n';
+      out.textContent += 'B sorted: ' + JSON.stringify(b.slice().sort((x,y)=>x-y)) + '\n\n';
+      out.textContent += 'Union (two-pointer): ' + JSON.stringify(unionSorted(a,b)) + '\n';
+      out.textContent += 'Intersection (freq): ' + JSON.stringify(intersectionFreq(a,b)) + '\n';
+      out.textContent += 'Union (set): ' + JSON.stringify(Array.from(new Set(a.concat(b))).sort((x,y)=>x-y)) + '\n';
+    }
+  </script>
+</body>
+</html>
